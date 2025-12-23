@@ -2,7 +2,9 @@ package com.back;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+@EnableJpaAuditing //수정 생성 날짜를 자동화
 @SpringBootApplication
 public class BackApplication {
 
