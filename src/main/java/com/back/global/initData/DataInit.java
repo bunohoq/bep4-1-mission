@@ -5,7 +5,7 @@ import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
 
-import com.back.boundedContext.post.app.PostService;
+import com.back.boundedContext.post.app.PostWriteUseCase;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -18,12 +18,12 @@ import org.springframework.context.annotation.Lazy;
 public class DataInit {
     private final DataInit self;
     private final MemberFacade memberFacade;
-    private final PostService postService;
+    private final PostWriteUseCase postWriteUseCase;
 
-    public DataInit(@Lazy DataInit self, MemberFacade memberFacade, PostService postService) {
+    public DataInit(@Lazy DataInit self, MemberFacade memberFacade, PostWriteUseCase postWriteUseCase) {
         this.self = self;
         this.memberFacade = memberFacade;
-        this.postService = postService;
+        this.postWriteUseCase = postWriteUseCase;
     }
 
     @Bean
@@ -37,12 +37,12 @@ public class DataInit {
 
     @Transactional
     public void makeBasePostComments() {
-        Post post1 = postService.findById(1).get();
-        Post post2 = postService.findById(2).get();
-        Post post3 = postService.findById(3).get();
-        Post post4 = postService.findById(4).get();
-        Post post5 = postService.findById(5).get();
-        Post post6 = postService.findById(6).get();
+        Post post1 = postWriteUseCase.findById(1).get();
+        Post post2 = postWriteUseCase.findById(2).get();
+        Post post3 = postWriteUseCase.findById(3).get();
+        Post post4 = postWriteUseCase.findById(4).get();
+        Post post5 = postWriteUseCase.findById(5).get();
+        Post post6 = postWriteUseCase.findById(6).get();
 
         Member user1Member = memberFacade.findByUsername("user1").get();
         Member user2Member = memberFacade.findByUsername("user2").get();
@@ -65,17 +65,17 @@ public class DataInit {
 
     @Transactional
     public void makeBasePosts(){
-        if(postService.count()>0) return;
+        if(postWriteUseCase.count()>0) return;
         Member user1Member = memberFacade.findByUsername("user1").get();
         Member user2Member = memberFacade.findByUsername("user2").get();
         Member user3Member = memberFacade.findByUsername("user3").get();
 
-        Post post1 = postService.write(user1Member, "제목1", "내용1");
-        Post post2 = postService.write(user1Member, "제목2", "내용2");
-        Post post3 = postService.write(user1Member, "제목3", "내용3");
-        Post post4 = postService.write(user2Member, "제목4", "내용4");
-        Post post5 = postService.write(user2Member, "제목5", "내용5");
-        Post post6 = postService.write(user3Member, "제목6", "내용6");
+        Post post1 = postWriteUseCase.write(user1Member, "제목1", "내용1");
+        Post post2 = postWriteUseCase.write(user1Member, "제목2", "내용2");
+        Post post3 = postWriteUseCase.write(user1Member, "제목3", "내용3");
+        Post post4 = postWriteUseCase.write(user2Member, "제목4", "내용4");
+        Post post5 = postWriteUseCase.write(user2Member, "제목5", "내용5");
+        Post post6 = postWriteUseCase.write(user3Member, "제목6", "내용6");
     }
 
     @Transactional
