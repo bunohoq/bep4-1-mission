@@ -1,0 +1,18 @@
+package com.back.global.global;
+
+import com.back.global.EventPublisher.EventPublisher;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class GlobalConfig {
+
+    @Getter
+    private static EventPublisher eventPublisher;
+
+    @Autowired
+    public GlobalConfig(EventPublisher eventPublisher) {
+        GlobalConfig.eventPublisher = eventPublisher;
+    }
+}
