@@ -3,6 +3,7 @@ package com.back.boundedContext.post.app;
 import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.EventPublisher.EventPublisher;
 import com.back.global.rsData.RsData;
@@ -26,7 +27,7 @@ public class PostWriteUseCase {
         return postRepository.count();
     }
 
-    public RsData<Post> write(Member author, String title, String content) {
+    public RsData<Post> write(PostMember author, String title, String content) {
         Post post = postRepository.save(new Post (author, title, content));
 
         eventPublisher.publish(
