@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RepliceMember extends BaseMember{
+public class ReplicaMember extends BaseMember{
     @Id
     private int id;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
 
-    public RepliceMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname, int activityScore) {
+    public ReplicaMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname, int activityScore) {
         super(username, password, nickname,  activityScore);
         this.id = id;
         this.createDate = createDate;
