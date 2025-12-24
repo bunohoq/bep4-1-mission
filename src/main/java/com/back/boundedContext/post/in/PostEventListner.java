@@ -2,6 +2,7 @@ package com.back.boundedContext.post.in;
 
 import com.back.boundedContext.member.app.MemberJoinUseCase;
 import com.back.boundedContext.post.app.PostFacade;
+import com.back.shared.member.event.MemberJoinedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +18,6 @@ public class PostEventListner {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(MemberJoinedEvent event) {
-        postFacade.syncMember(event.getMember());
+        postFacade.sysncMember(event.getMember());
     }
 }
