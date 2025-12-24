@@ -18,8 +18,8 @@ public class RepliceMember extends BaseMember{
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
 
-    public RepliceMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname) {
-        super(username, password, nickname);
+    public RepliceMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname, int activityScore) {
+        super(username, password, nickname,  activityScore);
         this.id = id;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
