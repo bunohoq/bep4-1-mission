@@ -2,6 +2,8 @@ package com.back.boundedContext.post.app;
 
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
+import com.back.boundedContext.post.out.PostMemberRepository;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostFacade {
     private final PostRepository postRepository;
+    private final PostMemberRepository postMemberRepository;
     private final PostWriteUseCase postWriteUseCase;
 
     @Transactional(readOnly = true)
@@ -29,5 +32,19 @@ public class PostFacade {
     @Transactional(readOnly = true)
     public Optional<Post> findById(int id) {
         return postRepository.findById(id);
+    }
+
+    public PostMember sysncMember(Member member) {
+        PostMember postMember = new PostMember(
+                member.getUsername(),
+                "",
+                member.getNickname()
+        );
+
+        postMember.setId(member.getId());
+        postMember.setCreateDate(member.getCreateDate());
+        postMember.setModifyDate(member.getModifyDate());
+
+        return postMemberRepository.save(postMember);
     }
 }
