@@ -1,12 +1,7 @@
 package com.back.boundedContext.member.in;
 
-
 import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
-import com.back.boundedContext.post.app.PostFacade;
-import com.back.boundedContext.post.domain.Post;
-import com.back.boundedContext.post.domain.PostMember;
-import com.back.global.rsData.RsData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -20,9 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberDataInit {
     private final MemberDataInit self;
     private final MemberFacade memberFacade;
-
-    public MemberDataInit(@Lazy MemberDataInit self,
-                          MemberFacade memberFacade
+    public MemberDataInit(
+            @Lazy MemberDataInit self,
+            MemberFacade memberFacade
     ) {
         this.self = self;
         this.memberFacade = memberFacade;
@@ -30,7 +25,7 @@ public class MemberDataInit {
 
     @Bean
     @Order(1)
-    public ApplicationRunner baseInitDataRunner() {
+    public ApplicationRunner memberDataInitApplicationRunner() {
         return args -> {
             self.makeBaseMembers();
         };
@@ -38,7 +33,7 @@ public class MemberDataInit {
 
     @Transactional
     public void makeBaseMembers() {
-        if (memberFacade.count() > 0) return; //회원 데이터가 없을때에만 아래 코드가 실행되게끔
+        if (memberFacade.count() > 0) return;
 
         Member systemMember = memberFacade.join("system", "1234", "시스템").getData();
         Member holdingMember = memberFacade.join("holding", "1234", "홀딩").getData();

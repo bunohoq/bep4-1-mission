@@ -1,4 +1,4 @@
-package com.back.global.rsData;
+package com.back.global.RsData;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
