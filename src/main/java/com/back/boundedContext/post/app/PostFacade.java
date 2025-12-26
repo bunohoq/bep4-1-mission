@@ -2,8 +2,6 @@ package com.back.boundedContext.post.app;
 
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
-import com.back.boundedContext.post.out.PostMemberRepository;
-import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.RsData.RsData;
 import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +13,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PostFacade {
-    private final PostRepository postRepository;
-    private final PostMemberRepository postMemberRepository;
+    private final PostSupport postSupport;
+    private final PostSyncMemberUseCase postSyncMemberUseCase;
     private final PostWriteUseCase postWriteUseCase;
 
     @Transactional(readOnly = true)
-    public long count() {
-        return postRepository.count();
+    public PostMember syncMember(MemberDto member) {
+        return postSyncMemberUseCase.syncMember(member);
     }
 
     @Transactional
@@ -30,27 +28,17 @@ public class PostFacade {
     }
 
     @Transactional(readOnly = true)
+    public long count() {
+        return postSupport.count();
+    }
+
+   @Transactional(readOnly = true)
     public Optional<Post> findById(int id) {
-        return postRepository.findById(id);
-    }
-
-    @Transactional
-    public PostMember sysncMember(MemberDto member) {
-        PostMember postMember = new PostMember(
-                member.getId(),
-                member.getCreateDate(),
-                member.getModifyDate(),
-                member.getUsername(),
-                "",
-                member.getNickname(),
-                member.getActivityScore()
-        );
-
-        return postMemberRepository.save(postMember);
-    }
+        return postSupport.findById(id);
+   }
 
     @Transactional(readOnly = true)
-    public Optional<PostMember> findPostMemberByUsername(String username)  {
-        return postMemberRepository.findByUsername(username);
+    public Optional<PostMember> findMemberByUsername(String username)  {
+        return postSupport.findMemberByUsername(username);
     }
 }

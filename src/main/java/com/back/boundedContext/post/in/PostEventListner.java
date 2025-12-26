@@ -19,12 +19,12 @@ public class PostEventListner {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(MemberJoinedEvent event) {
-        postFacade.sysncMember(event.getMember());
+        postFacade.syncMember(event.getMember());
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle (MemberModifiedEvent event) {
-        postFacade.sysncMember(event.getMember());
+        postFacade.syncMember(event.getMember());
     }
 }
