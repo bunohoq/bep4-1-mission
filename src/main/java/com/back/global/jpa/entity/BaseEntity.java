@@ -12,7 +12,10 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 //모든 엔티티들의 조상
-public abstract  class BaseEntity {
+public abstract class BaseEntity {
+    public abstract int getId();
+    public abstract LocalDateTime getCreateDate();
+    public abstract LocalDateTime getModifyDate();
     public String getModelTypeCode() {
         return this.getClass().getSimpleName();
     }
@@ -20,8 +23,4 @@ public abstract  class BaseEntity {
     protected void publishEvent(Object event) {
         GlobalConfig.getEventPublisher().publish(event);
     }
-
-    public abstract  int getId();
-    public abstract LocalDateTime getCreateDate();
-    public abstract LocalDateTime getModifyDate();
 }
