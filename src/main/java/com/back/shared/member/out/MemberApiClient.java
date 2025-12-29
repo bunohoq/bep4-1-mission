@@ -9,7 +9,7 @@ public class MemberApiClient {
             .baseUrl("http://localhost:8080/member/api/v1/")
             .build();
 
-    public static String getRandomSecurityTip() {
+    public static String getRandomSecureTip() {
         return restClient.get()
                 .uri("/members/randomSecureTip")
                 .retrieve()

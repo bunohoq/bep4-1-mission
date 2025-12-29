@@ -11,13 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CashCreateWalletUseCase {
-    private final CashMemberRepository cashMemberRepository;
     private final WalletRepository walletRepository;
+    private final CashMemberRepository cashMemberRepository;
 
-    public Wallet createWallet(CashMemberDto member) {
-        CashMember _member = cashMemberRepository.getReferenceById(member.getId());
-        Wallet wallet = new Wallet();
-
+    public Wallet createWallet(CashMemberDto memberDto) {
+        CashMember member = cashMemberRepository.getReferenceById(memberDto.getId());
+        Wallet wallet = new Wallet(member);
         return walletRepository.save(wallet);
     }
 }

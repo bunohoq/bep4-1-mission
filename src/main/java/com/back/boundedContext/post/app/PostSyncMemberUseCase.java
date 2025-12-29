@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class PostSyncMemberUseCase {
     private final PostMemberRepository postMemberRepository;
 
-    public PostMember syncMember (MemberDto member) {
+    public PostMember syncMember(MemberDto member) {
         PostMember postMember = new PostMember(
                 member.getId(),
                 member.getCreateDate(),
@@ -22,6 +22,6 @@ public class PostSyncMemberUseCase {
                 member.getActivityScore()
         );
 
-        return  postMemberRepository.save(postMember);
+        return postMemberRepository.save(postMember);
     }
 }

@@ -12,14 +12,15 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class CashSupport {
-    private final CashMemberRepository  cashMemberRepository;
-    private final WalletRepository  walletRepository;
+    //UseCase에서 사용되는 중복된 기능 모음
+    private final CashMemberRepository cashMemberRepository;
+    private final WalletRepository walletRepository;
 
     public Optional<CashMember> findMemberByUsername(String username) {
         return cashMemberRepository.findByUsername(username);
     }
 
     public Optional<Wallet> findWalletByHolder(CashMember holder) {
-        return  walletRepository.findByHolder(holder);
+        return walletRepository.findByHolder(holder);
     }
 }
