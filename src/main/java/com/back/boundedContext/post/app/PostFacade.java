@@ -39,6 +39,11 @@ public class PostFacade {
     }
 
     @Transactional(readOnly = true)
+    public long count() {
+        return postSupport.count();
+    }
+
+   @Transactional(readOnly = true)
     public Optional<Post> findById(int id) {
         return postSupport.findById(id);
     }
