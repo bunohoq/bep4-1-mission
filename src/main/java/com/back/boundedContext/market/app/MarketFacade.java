@@ -43,8 +43,8 @@ public class MarketFacade {
             int sourceId,
             String name,
             String description,
-            int price,
-            int salePrice
+            long price,
+            long salePrice
     ) {
         return marketCreateProductUseCase.createProduct(
                 seller,
@@ -106,4 +106,5 @@ public class MarketFacade {
     public void handle(CashOrderPaymentFailedEvent event) {
         marketCancelOrderRequestPaymentUseCase.handle(event);
     }
+
 }

@@ -11,12 +11,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.PERSIST;
+import static jakarta.persistence.CascadeType.REMOVE;
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name = "MARKET_ORDER")
 @NoArgsConstructor
 @Getter
 public class Order extends BaseIdAndTime {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private MarketMember buyer;
     private LocalDateTime cancelDate;
     private LocalDateTime requestPaymentDate;
@@ -24,12 +28,11 @@ public class Order extends BaseIdAndTime {
     private long price;
     private long salePrice;
 
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
     public Order(Cart cart) {
         this.buyer = cart.getBuyer();
-
         cart.getItems().forEach(item -> {
             addItem(item.getProduct());
         });
@@ -43,9 +46,7 @@ public class Order extends BaseIdAndTime {
                 product.getPrice(),
                 product.getSalePrice()
         );
-
         items.add(orderItem);
-
         price += product.getPrice();
         salePrice += product.getSalePrice();
     }
@@ -80,5 +81,4 @@ public class Order extends BaseIdAndTime {
     public void cancelRequestPayment() {
         requestPaymentDate = null;
     }
-
 }

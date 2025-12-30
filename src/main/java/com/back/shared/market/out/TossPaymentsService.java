@@ -32,6 +32,9 @@ public class TossPaymentsService {
                 .build();
     }
 
+    public record TossPaymentsConfirmRequest(String paymentKey, String orderId, long amount) {
+    }
+
     public Map<String, Object> confirmCardPayment(String paymentKey, String orderId, long amount) {
         TossPaymentsConfirmRequest requestBody = new TossPaymentsConfirmRequest(
                 paymentKey,
@@ -116,6 +119,4 @@ public class TossPaymentsService {
         return defaultValue;
     }
 
-    public record TossPaymentsConfirmRequest(String paymentKey, String orderId, long amount) {
-    }
 }
