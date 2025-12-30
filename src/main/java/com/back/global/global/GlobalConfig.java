@@ -7,12 +7,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class GlobalConfig {
-
     @Getter
     private static EventPublisher eventPublisher;
 
     @Autowired
-    public GlobalConfig(EventPublisher eventPublisher) {
+    public void setEventPublisher(EventPublisher eventPublisher) {
         GlobalConfig.eventPublisher = eventPublisher;
     }
 }

@@ -6,8 +6,8 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class PostCommentDto {
     private final int id;
     private final LocalDateTime createDate;
@@ -17,15 +17,15 @@ public class PostCommentDto {
     private final String authorName;
     private final String content;
 
-    public PostCommentDto(PostComment comment) {
+    public PostCommentDto(PostComment post) {
         this(
-                comment.getId(),
-                comment.getCreateDate(),
-                comment.getModifyDate(),
-                comment.getId(),
-                comment.getAuthor().getId(),
-                comment.getAuthor().getNickname(),
-                comment.getContent()
+                post.getId(),
+                post.getCreateDate(),
+                post.getModifyDate(),
+                post.getPost().getId(),
+                post.getAuthor().getId(),
+                post.getAuthor().getNickname(),
+                post.getContent()
         );
     }
 }

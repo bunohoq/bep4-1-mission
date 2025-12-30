@@ -15,6 +15,8 @@ import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMI
 @Component
 @RequiredArgsConstructor
 public class MemberEventListener {
+    //private final MemberService memberService;
+    //service를 직접 호출하지 않고 facade를 통해 호출하도록 함
     private final MemberFacade memberFacade;
 
     @TransactionalEventListener(phase = AFTER_COMMIT)
@@ -32,5 +34,4 @@ public class MemberEventListener {
 
         member.increaseActivityScore(1);
     }
-
 }

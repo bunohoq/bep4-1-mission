@@ -4,6 +4,8 @@ import com.back.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name = "CASH_CASH_LOG")
 @NoArgsConstructor
@@ -24,13 +26,10 @@ public class CashLog extends BaseIdAndTime {
     private EventType eventType;
     private String relTypeCode;
     private int relId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private CashMember member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private Wallet wallet;
-
     private long amount;
     private long balance;
 
@@ -43,5 +42,4 @@ public class CashLog extends BaseIdAndTime {
         this.amount = amount;
         this.balance = balance;
     }
-
 }

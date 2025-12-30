@@ -15,18 +15,15 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @Getter
-public class BaseManualIdAndTime extends BaseEntity{
+public abstract class BaseManualIdAndTime extends BaseEntity{
     @Id
     private int id;
-
     @CreatedDate
     private LocalDateTime createDate;
-
     @LastModifiedDate
     private LocalDateTime modifyDate;
 
     public BaseManualIdAndTime(int id) {
         this.id = id;
     }
-
 }

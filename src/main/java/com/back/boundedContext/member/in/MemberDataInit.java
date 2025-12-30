@@ -2,6 +2,9 @@ package com.back.boundedContext.member.in;
 
 import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
+import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
+import com.back.global.rsData.RsData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberDataInit {
     private final MemberDataInit self;
     private final MemberFacade memberFacade;
+
     public MemberDataInit(
             @Lazy MemberDataInit self,
             MemberFacade memberFacade
@@ -42,4 +46,5 @@ public class MemberDataInit {
         Member user2Member = memberFacade.join("user2", "1234", "유저2").getData();
         Member user3Member = memberFacade.join("user3", "1234", "유저3").getData();
     }
+
 }

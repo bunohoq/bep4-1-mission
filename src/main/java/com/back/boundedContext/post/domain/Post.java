@@ -1,5 +1,6 @@
 package com.back.boundedContext.post.domain;
 
+import com.back.boundedContext.member.domain.Member;
 import com.back.global.jpa.entity.BaseIdAndTime;
 import com.back.shared.post.dto.PostCommentDto;
 import com.back.shared.post.event.PostCommentCreatedEvent;
@@ -21,11 +22,10 @@ public class Post extends BaseIdAndTime {
     @ManyToOne(fetch = FetchType.LAZY)
     private PostMember author;
     private String title;
-
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-    @OneToMany(mappedBy = "post", cascade = {PERSIST, REMOVE}, orphanRemoval = true) // 변경을 감지해서 쿼리를 날려줌
+    @OneToMany(mappedBy = "post", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
 
     public Post(PostMember author, String title, String content) {
@@ -33,18 +33,15 @@ public class Post extends BaseIdAndTime {
         this.title = title;
         this.content = content;
     }
-
     public PostComment addComment(PostMember author, String content) {
-        PostComment postComment = new PostComment(this, author, content); //새로운 객체 만드는것
-
-        comments.add(postComment); //내용 추가
-
+        PostComment postComment = new PostComment(this, author, content);
+        comments.add(postComment);
+        //활동점수 추가(댓글)
+        //author.increaseActivityScore(1);
         publishEvent(new PostCommentCreatedEvent(new PostCommentDto(postComment)));
-
         return postComment;
     }
-
-    public boolean hasComments() {
+    public boolean hasComments(){
         return !comments.isEmpty();
     }
 }

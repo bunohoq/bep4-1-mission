@@ -1,6 +1,5 @@
 package com.back.boundedContext.cash.in;
 
-
 import com.back.boundedContext.cash.app.CashFacade;
 import com.back.boundedContext.cash.domain.CashLog;
 import com.back.boundedContext.cash.domain.CashMember;
@@ -29,7 +28,7 @@ public class CashDataInit {
 
     @Bean
     @Order(2)
-    public ApplicationRunner cashDataInitApplicationRunner() {
+    public ApplicationRunner cashDataInitApplicationRunner(){
         return args -> {
             self.makeBaseCredits();
         };
@@ -54,4 +53,6 @@ public class CashDataInit {
 
         user2Wallet.credit(150_000, CashLog.EventType.충전__무통장입금);
     }
+
+
 }

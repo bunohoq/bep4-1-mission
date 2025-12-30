@@ -12,33 +12,38 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
 
-
+// 회원의 현금 지갑
 @Entity
 @Table(name = "CASH_WALLET")
 @NoArgsConstructor
 @Getter
 public class Wallet extends BaseManualIdAndTime {
+    // 지갑 소유자
     @ManyToOne(fetch = FetchType.LAZY)
     private CashMember holder;
 
+    // 잔고
     @Getter
     private long balance;
 
+    // 현금 사용 내역
     @OneToMany(mappedBy = "wallet", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<CashLog> cashLogs = new ArrayList<>();
 
+    // 지갑 생성
     public Wallet(CashMember holder) {
         super(holder.getId());
         this.holder = holder;
     }
 
+    // 잔고 확인
     public boolean hasBalance() {
         return balance > 0;
     }
 
+    // 현금 충전
     public void credit(long amount, CashLog.EventType eventType, String relTypeCode, int relId) {
         balance += amount;
-
         addCashLog(amount, eventType, relTypeCode, relId);
     }
 
@@ -50,6 +55,7 @@ public class Wallet extends BaseManualIdAndTime {
         credit(amount, eventType, holder);
     }
 
+    // 현금 사용
     public void debit(long amount, CashLog.EventType eventType, String relTypeCode, int relId) {
         balance -= amount;
 
@@ -64,6 +70,7 @@ public class Wallet extends BaseManualIdAndTime {
         debit(amount, eventType, holder);
     }
 
+    // 현금 사용 내역 기록
     private CashLog addCashLog(long amount, CashLog.EventType eventType, String relTypeCode, int relId) {
         CashLog cashLog = new CashLog(
                 eventType,
@@ -74,9 +81,8 @@ public class Wallet extends BaseManualIdAndTime {
                 amount,
                 balance
         );
-
         cashLogs.add(cashLog);
-
         return cashLog;
     }
+
 }

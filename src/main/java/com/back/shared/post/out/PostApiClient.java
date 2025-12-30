@@ -13,7 +13,7 @@ public class PostApiClient {
             .baseUrl("http://localhost:8080/api/v1/post")
             .build();
 
-    public List<PostDto> getItems() {
+    public List<PostDto> getItems(){
         return restClient.get()
                 .uri("/posts")
                 .retrieve()
@@ -21,7 +21,7 @@ public class PostApiClient {
                 });
     }
 
-    public PostDto getItem(int id) {
+    public PostDto getItem(int id){
         return restClient.get()
                 .uri("/posts/%d".formatted(id))
                 .retrieve()

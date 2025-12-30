@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class MemberPolicy {
     private static final int PASSWORD_CHANGE_DAYS = 90;
 
-    public Duration getNeedToChangePasswordPeriod() {
+    public Duration getNeedToChangePasswordPeriod(){
         return Duration.ofDays(PASSWORD_CHANGE_DAYS);
     }
 
@@ -17,11 +17,8 @@ public class MemberPolicy {
         return PASSWORD_CHANGE_DAYS;
     }
 
-    public boolean isNeedToChangePassword(LocalDateTime lastChangeAt) {
-        if (lastChangeAt == null) return true;
-
-        return lastChangeAt.plusDays(PASSWORD_CHANGE_DAYS)
-                .isBefore(LocalDateTime.now());
+    public boolean isNeedToChangePassword(LocalDateTime lastChangedAt) {
+        if (lastChangedAt == null) return true;
+        return lastChangedAt.plusDays(PASSWORD_CHANGE_DAYS).isBefore(LocalDateTime.now());
     }
-
 }

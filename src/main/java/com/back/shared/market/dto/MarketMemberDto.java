@@ -1,7 +1,7 @@
-package com.back.shared.cash.dto;
+package com.back.shared.market.dto;
 
 
-import com.back.boundedContext.cash.domain.CashMember;
+import com.back.boundedContext.market.domain.MarketMember;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-public class CashMemberDto {
+public class MarketMemberDto {
     private final int id;
     private final LocalDateTime createDate;
     private final LocalDateTime modifyDate;
@@ -17,7 +17,7 @@ public class CashMemberDto {
     private final String nickname;
     private final int activityScore;
 
-    public CashMemberDto(CashMember member) {
+    public MarketMemberDto(MarketMember member) {
         this(
                 member.getId(),
                 member.getCreateDate(),

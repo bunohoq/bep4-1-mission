@@ -20,21 +20,12 @@ public class ApiV1PostController {
     @GetMapping
     @Transactional(readOnly = true)
     public List<PostDto> getItems() {
-        return postFacade
-                .findByOrderByIdDesc()
-                .stream()
-                .map(PostDto::new)
-                .toList();
+        return postFacade.findByOrderByIdDesc().stream().map(PostDto::new).toList();
     }
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
-    public PostDto getItem(
-            @PathVariable int id
-    ) {
-        return postFacade
-                .findById(id)
-                .map(PostDto::new)
-                .get();
+    public PostDto getItem(@PathVariable int id) {
+        return postFacade.findById(id).map(PostDto::new).get();
     }
 }
