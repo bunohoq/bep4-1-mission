@@ -8,15 +8,17 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name = "MARKET_ORDER_ITEM")
 @NoArgsConstructor
 @Getter
 public class OrderItem extends BaseIdAndTime {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private Product product;
 
     private String productName;

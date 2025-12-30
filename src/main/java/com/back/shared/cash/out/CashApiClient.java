@@ -23,4 +23,5 @@ public class CashApiClient {
         WalletDto walletDto = getItemByHolderId(holderId);
         return walletDto.getBalance();
     }
+
 }

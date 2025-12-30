@@ -155,7 +155,7 @@ public class MarketDataInit {
 
     @Transactional
     public void makeBaseOrders() {
-        if (marketFacade.ordersCount() > 0) return;
+        if(marketFacade.ordersCount() > 0) return;
 
         MarketMember user1Member = marketFacade.findMemberByUsername("user1").get();
         MarketMember user2Member = marketFacade.findMemberByUsername("user2").get();
@@ -186,9 +186,7 @@ public class MarketDataInit {
     @Transactional
     public void makeBasePaidOrders() {
         Order order1 = marketFacade.findOrderById(1).get();
-
-        if (order1.isPaid()) return;
-
+        if(order1.isPaid()) return;
         marketFacade.requestPayment(order1, 0);
     }
 }

@@ -43,7 +43,7 @@ public class CashFacade {
     }
 
     @Transactional
-    public void handle (MarketOrderPaymentRequestedEvent event) {
+    public void handle(MarketOrderPaymentRequestedEvent event) {
         cashCompleteOrderPaymentUseCase.handle(event);
     }
 

@@ -32,4 +32,5 @@ public class CashSupport {
     public Optional<Wallet> findHoldingWallet() {
         return walletRepository.findByHolderId(CashPolicy.HOLDING_MEMBER_ID);
     }
+
 }

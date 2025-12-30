@@ -8,8 +8,9 @@ import com.back.shared.cash.out.CashApiClient;
 import com.back.shared.market.out.TossPaymentsService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,13 +37,14 @@ public class ApiV1OrderController {
             methods = {RequestMethod.POST}
     )
     @PostMapping("/{id}/payment/confirm/by/tossPayments")
+    @Transactional
     public RsData<Void> confirmPaymentByTossPayments(
             @PathVariable int id,
             @Valid @RequestBody ConfirmPaymentByTossPaymentsReqBody reqBody
     ) {
         Order order = marketFacade.findOrderById(id).get();
 
-        if (order.isCanceled())
+        if(order.isCanceled())
             throw new DomainException("400-1", "이미 취소된 주문입니다.");
 
         if (order.isPaymentInProgress())
@@ -60,13 +62,12 @@ public class ApiV1OrderController {
             throw new DomainException("400-5", "주문번호가 일치하지 않습니다.");
 
         tossPaymentsService.confirmCardPayment(
-                reqBody.paymentKey(),
-                reqBody.orderId(),
-                reqBody.amount()
+                reqBody.paymentKey(), reqBody.orderId(), reqBody.amount()
         );
 
         marketFacade.requestPayment(order, reqBody.amount());
 
         return new RsData<>("202-1", "결제 프로세스가 시작되었습니다.");
     }
+
 }
