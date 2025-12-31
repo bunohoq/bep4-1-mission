@@ -32,7 +32,7 @@ public class PayoutItem extends BaseIdAndTime {
 
 
     public PayoutItem(Payout payout, PayoutEventType eventType, String relTypeCode, int relId, LocalDateTime payDate, PayoutMember payer, PayoutMember payee, long amount) {
-        this.payee = payee;
+        this.payout = payout;
         this.eventType = eventType;
         this.relTypeCode = relTypeCode;
         this.relId = relId;
