@@ -31,18 +31,18 @@ public class PayoutDataInit {
     private final PayoutDataInit self;
     private final PayoutFacade payoutFacade;
     private final JobOperator jobOperator;
-    private final Job payoutCollectItemsJob;
+    private final Job payoutCollectItemsAndCompletePayoutsJob;
 
     public PayoutDataInit(
             @Lazy PayoutDataInit self,
             PayoutFacade payoutFacade,
             JobOperator jobOperator,
-            Job payoutCollectItemsJob
+            Job payoutCollectItemsAndCompletePayoutsJob
     ) {
         this.self = self;
         this.payoutFacade = payoutFacade;
         this.jobOperator = jobOperator;
-        this.payoutCollectItemsJob = payoutCollectItemsJob;
+        this.payoutCollectItemsAndCompletePayoutsJob = payoutCollectItemsAndCompletePayoutsJob;
     }
 
     @Bean
@@ -51,12 +51,11 @@ public class PayoutDataInit {
         return args -> {
             self.forceMakePayoutReadyCandidatesItems();
             self.collectPayoutItemsMore();
-            self.runCollectPayoutItemsBatchJob();
             self.completePayoutsMore();
+            self.runCollectItemsAndCompletePayoutsBatchJob();
         };
     }
 
-    @Transactional
     public void forceMakePayoutReadyCandidatesItems() {
         payoutFacade.findPayoutCandidateItems().forEach(item -> {
             Util.reflection.setField(
@@ -70,11 +69,17 @@ public class PayoutDataInit {
     @Transactional
     public void collectPayoutItemsMore() {
         payoutFacade.collectPayoutItemsMore(4);
-        payoutFacade.collectPayoutItemsMore(2);
+        //payoutFacade.collectPayoutItemsMore(2);
+        //payoutFacade.collectPayoutItemsMore(2);
         payoutFacade.collectPayoutItemsMore(2);
     }
 
-    public void runCollectPayoutItemsBatchJob() {
+    @Transactional
+    public void completePayoutsMore() {
+        payoutFacade.completePayoutsMore(1);
+    }
+
+    public void runCollectItemsAndCompletePayoutsBatchJob() {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString(
                         "runDate",
@@ -83,7 +88,7 @@ public class PayoutDataInit {
                 .toJobParameters();
 
         try {
-            JobExecution execution = jobOperator.start(payoutCollectItemsJob, jobParameters);
+            JobExecution execution = jobOperator.start(payoutCollectItemsAndCompletePayoutsJob, jobParameters);
         } catch (JobInstanceAlreadyCompleteException e) {
             log.error("Job instance already complete", e);
         } catch (JobExecutionAlreadyRunningException e) {
@@ -93,12 +98,5 @@ public class PayoutDataInit {
         } catch (JobRestartException e) {
             log.error("job restart exception", e);
         }
-    }
-
-    @Transactional
-    public void completePayoutsMore() {
-        payoutFacade.completePayoutsMore(4);
-        payoutFacade.completePayoutsMore(2);
-        payoutFacade.completePayoutsMore(2);
     }
 }
