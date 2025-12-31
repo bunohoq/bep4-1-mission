@@ -6,7 +6,6 @@ import com.back.global.eventPublisher.EventPublisher;
 import com.back.shared.cash.event.CashOrderPaymentFailedEvent;
 import com.back.shared.cash.event.CashOrderPaymentSucceededEvent;
 import com.back.shared.market.dto.OrderDto;
-import com.back.shared.market.event.MarketOrderPaymentRequestedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -66,4 +65,5 @@ public class CashCompleteOrderPaymentUseCase {
         } //else
 
     }
+
 }

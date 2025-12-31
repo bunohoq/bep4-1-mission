@@ -1,4 +1,4 @@
-package com.back.shared.modelType;
+package com.back.standard.modelType;
 
 public interface CanGetModelTypeCode {
     String getModelTypeCode();

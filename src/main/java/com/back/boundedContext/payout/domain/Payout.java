@@ -1,10 +1,9 @@
 package com.back.boundedContext.payout.domain;
 
 import com.back.global.jpa.entity.BaseIdAndTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.back.shared.payout.dto.PayoutDto;
+import com.back.shared.payout.event.PayoutCompletedEvent;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +26,7 @@ public class Payout extends BaseIdAndTime {
 
     @Setter
     private LocalDateTime payoutDate;
+
     private long amount;
 
     @OneToMany(mappedBy = "payout", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
@@ -37,14 +37,27 @@ public class Payout extends BaseIdAndTime {
     }
 
     public PayoutItem addItem(PayoutEventType eventType, String relTypeCode, int relId, LocalDateTime payDate, PayoutMember payer, PayoutMember payee, long amount) {
-        PayoutItem payoutItem = new PayoutItem(
-                this, eventType, relTypeCode, relId, payDate, payer, payee, amount
-        );
-
+        PayoutItem payoutItem = new PayoutItem(this, eventType, relTypeCode, relId, payDate, payer, payee, amount);
         items.add(payoutItem);
-
         this.amount += amount;
-
         return payoutItem;
+    }
+
+    public void completePayout() {
+        this.payoutDate = LocalDateTime.now();
+        publishEvent(new PayoutCompletedEvent(toDto()));
+    }
+
+    public PayoutDto toDto() {
+        return new PayoutDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                payee.getId(),
+                payee.getNickname(),
+                payoutDate,
+                amount,
+                payee.isSystem()
+        );
     }
 }

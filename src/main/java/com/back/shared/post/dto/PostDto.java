@@ -1,8 +1,6 @@
 package com.back.shared.post.dto;
 
-import com.back.boundedContext.post.domain.Post;
-import com.back.shared.modelType.CanGetModelTypeCode;
-import com.fasterxml.jackson.annotation.JsonCreator;
+import com.back.standard.modelType.CanGetModelTypeCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

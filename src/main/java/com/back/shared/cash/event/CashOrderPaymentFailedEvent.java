@@ -2,7 +2,7 @@ package com.back.shared.cash.event;
 
 
 import com.back.shared.market.dto.OrderDto;
-import com.back.shared.resultType.ResultType;
+import com.back.standard.resultType.ResultType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

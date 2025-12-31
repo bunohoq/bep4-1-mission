@@ -3,7 +3,6 @@ package com.back.shared.member.domain;
 import com.back.global.jpa.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,5 +25,9 @@ public abstract class BaseMember extends BaseEntity {
         this.password = password;
         this.nickname = nickname;
         this.activityScore = activityScore;
+    }
+
+    public boolean isSystem() {
+        return "system".equals(username);
     }
 }
