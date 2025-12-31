@@ -48,7 +48,18 @@ public class OrderItem extends BaseIdAndTime {
                 productName,
                 price,
                 salePrice,
-                payoutRate
+                payoutRate,
+                getPayoutFee(),
+                getSalePriceWithoutFee()
         );
     }
+
+    private long getSalePriceWithoutFee() {
+        return MarketPolicy.calculateSalePriceWithoutFee(getSalePrice(), getPayoutRate());
+    }
+
+    private long getPayoutFee() {
+        return MarketPolicy.calculatePayoutFee(getSalePrice(), getPayoutRate());
+    }
+
 }
